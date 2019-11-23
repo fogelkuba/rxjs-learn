@@ -8,16 +8,26 @@ function addItem(val:any) {
 }
 
 const observable = Observable.create((observer: any) => {
-    observer.next('Hey guys');
-    observer.next('How are you?');
-    observer.complete();
-    observer.next('This will not send');
+    try {
+        observer.next('Hey guys');
+        observer.next('How are you?');
+        setInterval(() => {
+            observer.next('I am good')
+        }, 2000);
+        // observer.complete();
+        // observer.next('This will not send');
+    } catch (err) {
+        observer.error(err)
+    }
 });
 
-observable.subscribe(
+var observer = observable.subscribe(
     (v:any) => addItem(v),
     (error:any) => addItem(error),
     () => addItem('Completed'),
 );
 
-
+setTimeout(() => {
+    observer.unsubscribe();
+    console.log(observable);
+}, 6001);
