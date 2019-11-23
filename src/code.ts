@@ -15,6 +15,7 @@ const observable = Observable.create((observer: any) => {
             observer.next('I am good')
         }, 2000);
         // observer.complete();
+
         // observer.next('This will not send');
     } catch (err) {
         observer.error(err)
