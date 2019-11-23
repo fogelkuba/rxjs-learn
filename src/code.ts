@@ -1,16 +1,23 @@
-// import * as Rx from "rxjs/Observable";
-// console.log(Rx);
-
 import { Observable } from "rxjs";
 
-// const subscribe = function (observer: any) {
-//     observer.next('Hey guys')
-// };
+function addItem(val:any) {
+    const node = document.createElement("li");
+    const textnode = document.createTextNode(val);
+    node.appendChild(textnode);
+    document.getElementById("output").appendChild(node);
+}
 
 const observable = Observable.create((observer: any) => {
-    observer.next('Hey guys')
+    observer.next('Hey guys');
+    observer.next('How are you?');
+    observer.complete();
+    observer.next('This will not send');
 });
 
-observable.subscribe((v:any) => {
-    console.log(v)
-});
+observable.subscribe(
+    (v:any) => addItem(v),
+    (error:any) => addItem(error),
+    () => addItem('Completed'),
+);
+
+
